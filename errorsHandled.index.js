@@ -8,7 +8,7 @@ const port = process.env.PORT || 3000
 app.use(bodyParser.json())
 
 // Load the initial data from the JSON file
-let todoData = JSON.parse(fs.readFileSync('data.json', 'utf-8'))
+let todoData = JSON.parse(fs.readFileSync('database.json', 'utf-8'))
 
 // Error handling middleware
 app.use((err, req, res, next) => {
@@ -108,7 +108,7 @@ app.delete('/todos/:id', (req, res, next) => {
 
 // Save the updated data to the JSON file
 function saveDataToFile() {
-  fs.writeFileSync('data.json', JSON.stringify(todoData, null, 2), 'utf-8')
+  fs.writeFileSync('database.json', JSON.stringify(todoData, null, 2), 'utf-8')
 }
 
 app.listen(port, () => {
