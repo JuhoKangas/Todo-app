@@ -23,7 +23,6 @@ app.get('/todos', (req, res, next) => {
   try {
     res.json(todoData)
   } catch (error) {
-    console.error('Error:', error)
     next(error)
   }
 })
@@ -40,7 +39,6 @@ app.get('/todos/:id', (req, res, next) => {
       res.json(todo)
     }
   } catch (error) {
-    console.error('Error:', error)
     next(error)
   }
 })
@@ -62,7 +60,6 @@ app.post('/todos', (req, res, next) => {
     saveDataToFile()
     res.status(201).json(newTodo)
   } catch (error) {
-    console.error('Error:', error)
     next(error)
   }
 })
@@ -87,7 +84,6 @@ app.put('/todos/:id', (req, res, next) => {
     saveDataToFile()
     res.json({ message: 'Todo updated successfully' })
   } catch (error) {
-    console.error('Error:', error)
     next(error)
   }
 })
@@ -101,7 +97,6 @@ app.delete('/todos/:id', (req, res, next) => {
     saveDataToFile()
     res.json({ message: 'Todo deleted successfully' })
   } catch (error) {
-    console.error('Error:', error)
     next(error)
   }
 })
