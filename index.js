@@ -1,6 +1,5 @@
 const express = require('express');
 const cors = require('cors');
-const bodyParser = require('body-parser');
 const fs = require('fs');
 
 const app = express();
@@ -8,8 +7,6 @@ const port = process.env.PORT || 3000;
 
 app.use(cors());
 app.use(express.json());
-
-app.use(bodyParser.json());
 
 // Load the initial data from the JSON file
 let todoData = JSON.parse(fs.readFileSync('database.json', 'utf-8'));
