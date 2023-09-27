@@ -1,11 +1,10 @@
 const express = require('express')
-const bodyParser = require('body-parser')
 const fs = require('fs')
 
 const app = express()
 const port = process.env.PORT || 3000
 
-app.use(bodyParser.json())
+app.use(express.json())
 
 // Load the initial data from the JSON file
 let todoData = JSON.parse(fs.readFileSync('database.json', 'utf-8'))
