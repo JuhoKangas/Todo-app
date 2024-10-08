@@ -62,7 +62,7 @@ app.post('/todos', async (req, res) => {
 })
 
 // Update a todo
-app.put('/todos/:id', async (req, res) => {
+app.patch('/todos/:id', async (req, res) => {
   const { id } = req.params
   const { title, description, completed } = req.body
   try {
@@ -184,54 +184,6 @@ app.get('/todos/:todoId/tags', async (req, res) => {
       [todoId]
     )
     res.json(result.rows)
-  } catch (err) {
-    console.error(err)
-    res.status(500).json({ error: 'Internal server error' })
-  }
-})
-
-app.get('/populate-dummy-data', async (req, res) => {
-  try {
-    // Clear existing data
-    await pool.query('TRUNCATE todos, tags, todo_tags RESTART IDENTITY CASCADE')
-
-    // Insert dummy todos
-    const todosResult = await pool.query(`
-      INSERT INTO todos (title, description, completed) VALUES
-      ('Buy groceries', 'Milk, eggs, bread', false),
-      ('Finish project', 'Complete the report by Friday', false),
-      ('Call mom', 'Catch up and plan visit', true),
-      ('Exercise', 'Go for a 30-minute run', false),
-      ('Read book', 'Finish chapter 5 of "The Great Gatsby"', false)
-      RETURNING *
-    `)
-
-    // Insert dummy tags
-    const tagsResult = await pool.query(`
-      INSERT INTO tags (name) VALUES
-      ('personal'),
-      ('work'),
-      ('health'),
-      ('urgent'),
-      ('leisure')
-      RETURNING *
-    `)
-
-    // Associate tags with todos
-    await pool.query(`
-      INSERT INTO todo_tags (todo_id, tag_id) VALUES
-      (1, 1), (1, 4), -- Buy groceries: personal, urgent
-      (2, 2), (2, 4), -- Finish project: work, urgent
-      (3, 1),         -- Call mom: personal
-      (4, 3),         -- Exercise: health
-      (5, 1), (5, 5)  -- Read book: personal, leisure
-    `)
-
-    res.json({
-      message: 'Dummy data populated successfully',
-      todos: todosResult.rows,
-      tags: tagsResult.rows,
-    })
   } catch (err) {
     console.error(err)
     res.status(500).json({ error: 'Internal server error' })
