@@ -6,6 +6,8 @@ The end result for Hive Helsinki masterclass in javascript backend with node/exp
 
 - Copy the repository with git to wherever you'd like
 - `cd` to directory and run `npm install`
+- build the database container `docker build -t my-postgres-db .`
+- run the database container `docker run --name my-postgres-container -p 5432:5432 my-postgres-db`
 - run the server with `npm start`, you got a server now running in the localhost port 3000
 - alternatively to test out the error messages from the backend run `npm run start:errors`
 
